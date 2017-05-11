@@ -1,0 +1,128 @@
+screen java -jar myspov3.0.jar 4 3 0 0.8 1.2 0.8 1.2 0.8 1.2 0.8 1.2
+
+
+scp -P 3015 -r hernani@pillars.lrc.ic.unicamp.br:/home/hernani/PSO/SPS/myspov1.0.jar /local1/hernani/MySPO/
+
+
+scp -P 3015 -r /local1/hernani/MySPO/output_12.dat output_3.dat output_6.dat output_9.dat hernani@pillars.lrc.ic.unicamp.br:/home/hernani/PSO/2k1602091042/ 
+
+scp -P 3015 -r hernani@pillars.lrc.ic.unicamp.br:/home/hernani/PSO/2k1602091042/SPS/Resultados/2016-09-02-13\:28\:47/v* /local1/hernani/MySPO/SPS/ 
+
+/home/hernani/PSO/2k1602091042/SPS/Resultados/2016-09-02-13:28:47
+hernani@demeter:/local1/hernani/MySPO/SPS$ vi delaybar
+# Gnuplot script file for plotting data in file "force.dat"
+# This file is called   force.p
+set boxwidth 0.4 #absolute
+#set style fill solid 1.0 #border -1
+set style data histogram
+#set style histogram cluster gap 1
+set terminal postscript eps enhanced color lw 2 "Times" 24
+#set   autoscale                        # scale axes automatically
+#set logscale y
+#set key top left
+unset label                            # remove any previous labels
+#set xtic auto                          # set xtics automatically
+#set ytic auto                          # set ytics automatically
+set nokey
+set title "Mean overall proc. delay per k-comp"
+set xtics nomirror rotate by -45
+#set xtics 0,5,40
+#set xtics add ("Event" 30)
+offset 0,graph 0.05
+set xlabel " "
+set ylabel "Mean proc. delay (ms)"
+set term postscript eps enhanced color
+set out 'dbar.eps'
+#plot "delay.dat" using 2:xticlabels(1),\ ""  using 3 w yerrorlines lt 1 lw 2
+plot "vdata.dat" using (column(0)):2:3:xtic(1) w boxerrorbars
+
+
+
+# Gnuplot script file for plotting data in file "force.dat"
+
+# This file is called   force.p
+
+set terminal postscript eps enhanced color lw 2 "Times" 24
+
+set   autoscale                        # scale axes automatically
+
+set logscale y
+set key top left
+unset label                            # remove any previous labels
+
+set xtic auto                      
+ # set xtics automatically
+set ytic auto                         
+ # set ytics automatically
+
+#set title "Mean Bandwidth Blocking Ratio"
+
+set xlabel "Traffic load"
+
+set ylabel "Bandwidth Blocking Ratio"
+
+set term postscript eps enhanced color
+
+set out 'tline.eps'
+
+plot "vdata.dat" using 6:2:3 title "t1" w yerrorlines lt 1 lw 2, "vdata.dat" using 8:2:3 title "t2" w yerrorlines lt 2 lw 2,  "vdata.dat" using 10:2:3 title "t3" w yerrorlines lt 3 lw 2,  "vdata.dat" using 12:2:3 title "t4" w yerrorlines lt 4 lw 2
+
+
+
+hernani@demeter:/local1/hernani/MySPO/SPS$ vi plotar
+#!/bin/bash
+gnuplot -e "load 'dbar'"
+gnuplot -e "load 'tline'"
+epspdf dbar.eps dbar.pdf
+epspdf tline.eps tline.pdf
+foldername=$(date +%Y-%m-%d-%H:%M:%S)
+mkdir /local1/hernani/MySPO/SPS/resultados/$foldername
+cp *.dat /local1/hernani/MySPO/SPS/resultados/$foldername
+cp *.pdf /local1/hernani/MySPO/SPS/resultados/$foldername
+cp *.eps /local1/hernani/MySPO/SPS/resultados/$foldername
+cp delaybar /local1/hernani/MySPO/SPS/resultados/$foldername
+cp totalcompbar /local1/hernani/MySPO/SPS/resultados/$foldername
+#cp *.xml /local1/hernani/MySPO/SPS/resultados/$foldername
+#cp *.jar /local1/hernani/MySPO/SPS/resultados/$foldername
+#./email
+/////////////
+# Gnuplot script file for plotting data in file "force.dat"
+# This file is called   force.p
+set boxwidth 0.75 absolute
+set term pos eps font 20
+set style data histogram
+set style histogram rowstacked
+set key invert reverse above
+set style fill solid 1.0 border -1
+#set style data histogram
+#set style histogram rowstacked
+#set style histogram cluster gap 1
+#set terminal postscript eps enhanced color lw 2 "Times" 24
+#set   autoscale                        # scale axes automatically
+#set logscale y
+#set key top left
+unset label                            # remove any previous labels
+#set xrange [0:13]
+#set xtic auto
+# set xtics automatically
+#set ytic auto
+#set ytics automatically
+#set title "Num.of used resources per type of VNF comp."
+#set xlabel "Traffic load"
+set ylabel "Bandwidth Blocking Ratio"
+set term postscript eps enhanced color
+set out 'tbar.eps'
+plot "vdata.dat" using (column(0)):6:7:xtic(1) w boxerrorbars t "vMCE" lc rgb "#006600"  lt -1fs pattern 1, "vdata.dat" using (column(0)):8:9:xtic(1) w boxerrorbars t "vMME" lc rgb "#006600"  lt -1 fs pattern 2,  "vdata.dat" using (column(0)):10:11:xtic(1) w boxerrorbars t "vMBMS-GW"  lc rgb "#330000"  lt -1 fs pattern 3,  "vdata.dat" using (column(0)):12:13:xtic(1) w boxerrorbars t "vBM-SC" lc rgb "#000099"  lt -1 fs 
+
+(ceil(
+
+
+
+
+
+
+
+
+
+
+
